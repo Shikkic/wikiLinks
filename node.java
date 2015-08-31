@@ -10,11 +10,9 @@ import java.net.URL;
 class LinkedList {
 
     Node root;
-    Node next;
 
     public LinkedList() {
         root = null;
-        next = null; 
     }
 
     // Inserting node into the linked list
@@ -28,9 +26,7 @@ class LinkedList {
             System.out.println("Root has null next");
             pointer.next = newNode;
         } else {
-            System.out.println("Entering while");
             while (pointer.next != null) {
-                System.out.println("Pointer.next ="+pointer.next.url);
                 pointer = pointer.next;
             }
             pointer.next = newNode;
@@ -62,6 +58,7 @@ class Node {
     // Public Constructor
     public Node(String newUrl) {
         url = newUrl;
+        next = null;
         children = new LinkedList();
     }
 
@@ -126,17 +123,18 @@ class Node {
         //wiki.children.print();
         Node pointer = wiki.children.root;
         //enqueue children
+        // TODO Fix infinite loop of traversing and enqueing children
         while (pointer != null) {
-            System.out.println("enqueuing children");
-            list.insert(pointer);
+            Node linkNode = new Node(pointer.url);
+            list.insert(linkNode);
             pointer = pointer.next;
         }
         list.print();
-        pointer = list.root;/*
+        pointer = list.root;
         while (pointer != null) {
-             
+            
         }
-        */
+        
         System.out.println("After printing");
         //System.out.println(results);
         //System.out.println(wiki.url);
