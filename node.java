@@ -80,7 +80,7 @@ class Node {
 
     // Strips all href links and appends to LinkedList of Children
     // Figure out how to access chars in String
-    public void strip(String text) {
+    public int strip(String text, Node endNode) {
         int i = 0;
         int z = 0;
         String html = text;
@@ -103,13 +103,18 @@ class Node {
                     }
                     // Create Node from result
                     Node linkNode = new Node("https://en.wikipedia.org/"+link.toString());
+                    if (linkNode.url.equals(endNode.url)) {
+                        System.out.println("FOUND IT");
+                        return 1;
+                    }
                     // Add to queue
                     children.insert(linkNode);
                 }
                 // If true add the next n chars till " to a string and return
             } 
             i++;
-        } 
+        }
+        return 0;
     }
 
     public static void main(String [] args) throws Exception {
@@ -127,7 +132,8 @@ class Node {
         // Request specific page and return HTML 
         String results = startNode.getRequest();
         // Strip HTML for all internal links 
-        startNode.strip(results);
+        int strip = startNode.strip(results, endNode);
+        System.out.println(strip);
         //wiki.children.print();
         // Create pointer to the first Interal Link of the start node
         Node pointer = startNode.children.root;
@@ -138,19 +144,19 @@ class Node {
             list.insert(linkNode);
             pointer = pointer.next;
         }
-        list.print();
+        //list.print();
 
         // List is now full of nodes to traverse
         pointer = list.root;
         // Until we hit the end of the list and the wiki url we're scarping isn't the one we're looking for
         System.out.println(pointer.url+" = "+endNode.url);
-        while (pointer != null && !(pointer.url.equals(endNode.url.toLowerCase()))) {
+        while (pointer != null && !(pointer.url.equals(endNode.url)) && strip == 0) {
             // Step 1. request page 
             Node search = new Node(pointer.url);
             // Step 2. strip results
             results = search.getRequest();
             // Step 3. for each child add to the list
-            search.strip(results);
+            strip = search.strip(results, endNode);
             // For each child add to the list
             Node searchPointer = search.children.root;
             while (searchPointer != null) {
