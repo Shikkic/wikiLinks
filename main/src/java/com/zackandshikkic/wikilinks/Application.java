@@ -1,6 +1,7 @@
 package com.zackandshikkic.wikilinks;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 class Application {
@@ -21,12 +22,20 @@ class Application {
         System.out.println("Enter end node URL");
         String endNodeUrl = "Ketchup";
 
+        /*
+         * Create Start Node
+         */
         PageNode startNode = new PageNode(startNodeUrl, 0);
+
+        /*
+         * Create End Node
+         */
         PageNode endNode = new PageNode(endNodeUrl, 0);
 
         startNode.printNode();
         endNode.printNode();
-        linkFetcher.getUrlsOnPage(startNode.getPageUrl());
+        List<String> children = linkFetcher.getUrlsOnPage(startNode.getPageUrl());
+        System.out.println(children);
     }
 
 }
