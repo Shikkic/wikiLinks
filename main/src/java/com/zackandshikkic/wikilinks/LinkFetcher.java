@@ -14,6 +14,7 @@ public class LinkFetcher {
 
         Elements allLinks = webPage.select("a[href]");
 
+        System.out.println(allLinks);
 
         return null;
     }

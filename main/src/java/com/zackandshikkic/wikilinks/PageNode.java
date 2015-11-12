@@ -9,7 +9,7 @@ class PageNode {
     private List<String> childrenPageNodes;
     
     public PageNode(String url, int parentDepth) {
-        this.pageUrl = url;
+        this.pageUrl = "https://en.wikipedia.org/wiki/" + url;
         this.depth = parentDepth + 1;
     }
         
@@ -19,6 +19,10 @@ class PageNode {
 
     public List<String> getChildrenPageNodes() {
         return this.childrenPageNodes;
+    }
+
+    public String getPageUrl() {
+        return this.pageUrl;
     }
 
     public void printNode() {
