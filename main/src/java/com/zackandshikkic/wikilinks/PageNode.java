@@ -1,10 +1,12 @@
 package com.zackandshikkic.wikilinks;
 
+import java.util.List;
+
 class PageNode {
 
     private String pageUrl;
     private int depth;
-    private List<String> childenPageNodes; 
+    private List<String> childrenPageNodes;
     
     public PageNode(String url, int parentDepth) {
         this.pageUrl = url;
@@ -19,7 +21,7 @@ class PageNode {
         return this.childrenPageNodes;
     }
 
-    public printNode() {
+    public void printNode() {
         System.out.println("page Url = " + pageUrl);
         System.out.println("depth = " + depth);
     }
