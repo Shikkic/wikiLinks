@@ -18,7 +18,7 @@ public class LinkFetcher {
     }
 
     private List<String> extractInternalValidUrls(Elements allLinks) {
-        return allLinks.stream().map(element -> element.attr("href")).filter(this::isValid).collect(Collectors.toList());
+        return allLinks.stream().map(element -> element.attr("href")).filter(this::isValid).map(url -> url.substring(6)).collect(Collectors.toList());
     }
 
     private boolean isValid(String url) {
