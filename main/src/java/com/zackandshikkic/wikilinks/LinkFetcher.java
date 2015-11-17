@@ -2,12 +2,11 @@ package com.zackandshikkic.wikilinks;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LinkFetcher {
 
@@ -19,26 +18,10 @@ public class LinkFetcher {
     }
 
     private List<String> extractInternalValidUrls(Elements allLinks) {
-        List<String> childrenList = new ArrayList<String>();
-        for (Element link: allLinks) {
-            String child = parseAndValidate(link);
-            if (child != null) {
-                childrenList.add(child);
-            }
-        }
-        return childrenList;
+        return allLinks.stream().map(element -> element.attr("href")).filter(this::isValid).collect(Collectors.toList());
     }
 
-    private String parseAndValidate(Element element) {
-        String url = element.attr("href");
-        boolean validUrl = url.startsWith("/wiki");
-
-        // Can choose to exclude File: prefix later if we want
-        if (validUrl) {
-            return url;
-        }
-
-        return null;
+    private boolean isValid(String url) {
+        return url.startsWith("/wiki/") && !url.contains("File:");
     }
-
 }
