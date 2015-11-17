@@ -5,14 +5,33 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LinkFetcher {
 
-    public List<String> getUrlsOnPage(String url) throws IOException {
-        Document webPage = Jsoup.connect(url).get();
-        Elements allLinks = webPage.select("a[href]");
+    public List<String> getUrlsOnPage(String url) {
+        boolean success = false;
+        int count = 0;
+        Elements allLinks = null;
+
+        while (count < 3) {
+            try {
+                Document webPage = Jsoup.connect(url).get();
+                allLinks = webPage.select("a[href]");
+                success = true;
+                break;
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            count++;
+        }
+
+        if (!success) {
+            // Test
+            throw new NullPointerException();
+        }
 
         return extractInternalValidUrls(allLinks);
     }

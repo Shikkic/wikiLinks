@@ -23,7 +23,7 @@ class Application {
          * Take a user input for ending node
          */
         System.out.println("Enter end node URL");
-        String endNodeUrl = "Hitler";
+        String endNodeUrl = "Hot_Dog";
 
         /*
          * Create Start Node
