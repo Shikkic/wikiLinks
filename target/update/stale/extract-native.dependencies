@@ -1,0 +1,1 @@
+([:dependencies ([org.clojure/clojure "1.7.0"] [enlive/enlive "1.1.6"] [com.rpl/specter "0.8.0"])])
